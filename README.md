@@ -53,7 +53,15 @@ docker-compose up -d
 docker exec -it laravel_api php artisan config:clear
 ```
 
-**Generar clave JWT:**
+**Generar claves y JWT:**
+
+```bash
+docker exec -it laravel_api cp .env.example .env
+```
+
+```bash
+docker exec -it laravel_api php artisan key:generate
+```
 
 ```bash
 docker exec laravel_api php artisan jwt:secret --force
@@ -149,7 +157,7 @@ docker exec -it laravel_api chmod -R 775 /var/www/html/storage
 ## 🌐 URLs de acceso
 
 - **Frontend React:** http://localhost:5173
-- **API Laravel:** http://localhost:8000
+- **API Laravel:** http://localhost:8000/api
 - **Base de datos MariaDB:** localhost:3307
 
 ---
