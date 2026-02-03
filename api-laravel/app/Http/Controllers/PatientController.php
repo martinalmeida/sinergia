@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
 use App\Services\PatientService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
@@ -17,12 +18,19 @@ class PatientController extends Controller
         $this->patientService = $patientService;
     }
 
-    public function index(): JsonResponse
+    //Modificamos el método index para recibir la Request
+    public function index(Request $request): JsonResponse
     {
-        $patients = $this->patientService->getAllPatients();
+        //Capturamos el término de búsqueda (será null si no se envía)
+        $search = $request->query('search');
+
+        //Se lo pasamos al servicio
+        $patients = $this->patientService->getAllPatients($search);
+        
         return response()->json($patients);
     }
 
+    //... El resto de métodos (store, show, update, destroy) quedan IGUAL ...
     public function store(StorePatientRequest $request): JsonResponse
     {
         $patient = $this->patientService->createPatient($request->validated());
